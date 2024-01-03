@@ -1,11 +1,19 @@
-// This JavaScript code is used to make the website interactive.
+document.addEventListener('DOMContentLoaded', (event) => {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('#left-pane ul li a');
 
-// When the user clicks on a link in the navigation bar,
-// the corresponding section is displayed.
-$(document).ready(function() {
-  $('nav a').click(function() {
-    var section = $(this).attr('href');
-    $('main > section').hide();
-    $(section).show();
-  });
+    function setActiveLink() {
+        let index = sections.length;
+
+        while(--index && window.scrollY + 50 < sections[index].offsetTop) {}
+
+        navLinks.forEach((link) => link.classList.remove('active'));
+        navLinks[index].classList.add('active');
+
+        sections.forEach((section) => section.classList.remove('active'));
+        sections[index].classList.add('active');
+    }
+
+    setActiveLink(); // Set active link on load
+    window.addEventListener('scroll', setActiveLink);
 });
